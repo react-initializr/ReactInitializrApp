@@ -31,3 +31,7 @@ git clone https://github.com/react-initializr/ReactInitializrApp
    ```bash
    pip install -r requirements.txt
    ```
+4. Run the command in the root directory:
+    ```bash
+    python -m reactinitializrapp.main
+    ```
