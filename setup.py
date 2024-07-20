@@ -3,7 +3,7 @@ import os
 from setuptools import find_packages, setup
 
 
-# Funcionn para leer requirements.txt
+# Función para leer requirements.txt
 def parse_requirements(filename):
     """ Load requirements from a pip requirements file """
     lineiter = (line.strip() for line in open(filename))
