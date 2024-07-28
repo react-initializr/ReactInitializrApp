@@ -22,7 +22,7 @@ class UISearchInput:
 
         # Botón
         # TODO: Cambiar el texto del botón a un icono
-        self.btn_search = QtWidgets.QPushButton("🔍")
+        self.btn_search = QtWidgets.QPushButton("S")
 
         # Añadir el campo de texto y el botón al layout del contenedor
         self.container_layout.addWidget(self.txt_search)
@@ -33,9 +33,7 @@ class UISearchInput:
 
     def setup_styles(self):
         # Estilos para el widget contenedor
-        self.container_widget.setStyleSheet(
-            "border: none; padding: 0;"
-        )
+        self.container_widget.setStyleSheet("border: none; padding: 0;")
 
         # Estilos para el campo de texto
         self.txt_search.setStyleSheet(
