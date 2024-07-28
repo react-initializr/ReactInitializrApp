@@ -1,5 +1,6 @@
 from PySide6 import QtWidgets
 from reactinitializrapp.widgets.lateral_bar.ui_lateral_bar import UILateralBar
+from reactinitializrapp.widgets.settings_window.settings_window import SettingsWindow
 
 
 class LateralBar(QtWidgets.QWidget):
@@ -64,4 +65,6 @@ class LateralBar(QtWidgets.QWidget):
         print("New Project clicked")
 
     def on_logo_clicked(self):
-        print("Logo clicked")
+        # Mostrar la ventana de configuración
+        self.settings_window = SettingsWindow()
+        self.settings_window.show()
