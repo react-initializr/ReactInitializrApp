@@ -35,13 +35,29 @@ class LateralBar(QtWidgets.QWidget):
     def on_lateral_bar_clicked(self):
         if self.is_active:
             self.setGeometry(0, 0, 100, 600)
-            self.ui.btn_new_project.setText("NP")
+            self.ui.btn_new_project.show()
+            self.ui.search_input.hide()
             self.ui.btn_logo.setText("L")
+            self.ui.btn_logo.setStyleSheet(
+                "background-color: #292929; color: white; border: 1px solid #000; padding: 10px 0; border-radius: 5px;"
+            )
             self.is_active = False
         else:
             self.setGeometry(0, 0, 200, 600)
-            self.ui.btn_new_project.setText("New Project")
-            self.ui.btn_logo.setText("Logo")
+            self.ui.btn_new_project.hide()
+            self.ui.search_input.show()
+            self.ui.btn_logo.setText("React Initializr >")
+            self.ui.btn_logo.setStyleSheet(
+                """
+                QPushButton {
+                    background-color: transparent; color: white; padding: 10px 0; border: none;
+                }
+                QPushButton:hover {
+                    background-color: #292929;
+                    border-radius: 5px;
+                }
+                """
+            )
             self.is_active = True
 
     def on_new_project_clicked(self):
