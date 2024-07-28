@@ -1,4 +1,3 @@
-from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMainWindow
 
 from reactinitializrapp.widgets.settings_window.ui_settings_window import UISettingsWindow

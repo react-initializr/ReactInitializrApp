@@ -1,6 +1,8 @@
 from PySide6 import QtCore, QtWidgets
 
 from reactinitializrapp.widgets.search_input.search_input import SearchInput
+from reactinitializrapp.widgets.project_button.project_button import ProjectButton
+from reactinitializrapp.models.project import Project
 
 
 class UILateralBar:
@@ -22,12 +24,25 @@ class UILateralBar:
         # Búsqueda
         self.search_input = SearchInput(self.container_widget)
 
+        # Proyectos de prueba
+        # TODO:
+        #  - Eliminar los proyectos
+        #  - Agregar un layout para los proyectos
+        #  - Recibir los proyectos por parámetros O de una variable general
+        self.project1 = ProjectButton(Project("Project 1"))
+        self.project2 = ProjectButton(Project("Project 2"))
+
         # Botones
         self.btn_new_project = QtWidgets.QPushButton("NP")
         self.btn_logo = QtWidgets.QPushButton("React Initializr >")
 
         # Añadir los botones al layout del contenedor
         self.container_layout.addWidget(self.btn_new_project)
+
+        # Añadir los proyectos al layout del contenedor
+        self.container_layout.addWidget(self.project1)
+        self.container_layout.addWidget(self.project2)
+
         self.container_layout.addWidget(self.btn_logo)
 
         # Ocultar el botón de nuevo proyecto al inicio por estar activo
