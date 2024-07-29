@@ -6,7 +6,18 @@ class UIMainWindow:
     def __init__(self, main_window):
         main_window.setObjectName("MainWindow")
         main_window.resize(800, 600)
+        self.setup_ui(main_window)
+        self.retranslate_ui(main_window)
+        QtCore.QMetaObject.connectSlotsByName(main_window)
 
+    @staticmethod
+    def retranslate_ui(main_window):
+        _translate = QtCore.QCoreApplication.translate
+        # Renombrar la ventana principal
+        main_window.setWindowTitle(_translate("MainWindow", "React Initializr"))
+
+    def setup_ui(self, main_window):
+        # Contenedor central
         self.central_widget = QtWidgets.QWidget(main_window)
         self.central_widget.setObjectName("CentralWidget")
 
@@ -23,12 +34,3 @@ class UIMainWindow:
         self.horizontal_layout.addWidget(self.chat)
 
         main_window.setCentralWidget(self.central_widget)
-
-        self.retranslate_ui(main_window)
-        QtCore.QMetaObject.connectSlotsByName(main_window)
-
-    @staticmethod
-    def retranslate_ui(main_window):
-        _translate = QtCore.QCoreApplication.translate
-        # Renombrar la ventana principal
-        main_window.setWindowTitle(_translate("MainWindow", "React Initializr"))
