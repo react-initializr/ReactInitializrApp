@@ -6,7 +6,6 @@ from reactinitializrapp.widgets.settings_window.settings_window import SettingsW
 class LateralBar(QtWidgets.QWidget):
     def __init__(self, parent):
         super().__init__(parent)
-        self.setObjectName("LateralBar")
         self.ui = UILateralBar(self)
 
         # Atributo para saber si el widget está activo
@@ -35,7 +34,7 @@ class LateralBar(QtWidgets.QWidget):
 
     def on_lateral_bar_clicked(self):
         if self.is_active:
-            self.setGeometry(0, 0, 100, 600)
+            self.setFixedWidth(100)
             self.ui.btn_new_project.show()
             self.ui.search_input.hide()
             self.ui.btn_logo.setText("L")
@@ -44,7 +43,7 @@ class LateralBar(QtWidgets.QWidget):
             )
             self.is_active = False
         else:
-            self.setGeometry(0, 0, 200, 600)
+            self.setFixedWidth(200)
             self.ui.btn_new_project.hide()
             self.ui.search_input.show()
             self.ui.btn_logo.setText("React Initializr >")

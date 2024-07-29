@@ -7,13 +7,15 @@ from reactinitializrapp.models.project import Project
 
 class UILateralBar:
     def __init__(self, lateral_bar):
-        lateral_bar.setGeometry(QtCore.QRect(0, 0, 200, 600))
+        lateral_bar.setObjectName("LateralBar")
         self.setup_ui(lateral_bar)
         self.setup_styles()
 
     def setup_ui(self, lateral_bar):
         # Disposición Vertical
         self.vertical_layout = QtWidgets.QVBoxLayout(lateral_bar)
+        self.vertical_layout.setSpacing(0)
+        self.vertical_layout.setContentsMargins(0, 0, 0, 0)
 
         # Widget contenedor
         self.container_widget = QtWidgets.QWidget(lateral_bar)
@@ -50,6 +52,10 @@ class UILateralBar:
 
         # Añadir el contenedor al layout principal
         self.vertical_layout.addWidget(self.container_widget)
+
+        # Ajustar el tamaño del lateral_bar al tamaño de la ventana principal
+        lateral_bar.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        lateral_bar.setMaximumWidth(200)
 
     def setup_styles(self):
         # Estilos para el widget contenedor

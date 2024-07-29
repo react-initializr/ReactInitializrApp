@@ -10,9 +10,20 @@ class UIMainWindow:
         self.central_widget = QtWidgets.QWidget(main_window)
         self.central_widget.setObjectName("CentralWidget")
 
+        # Disposición Horizontal
+        self.horizontal_layout = QtWidgets.QHBoxLayout(self.central_widget)
+
+        # Lateral Bar
         self.lateral_bar = LateralBar(main_window)
+        # Chat
+        self.chat = QtWidgets.QWidget(main_window)
+
+        # Estructura de la ventana principal en el layout horizontal
+        self.horizontal_layout.addWidget(self.lateral_bar)
+        self.horizontal_layout.addWidget(self.chat)
 
         main_window.setCentralWidget(self.central_widget)
+
         self.retranslate_ui(main_window)
         QtCore.QMetaObject.connectSlotsByName(main_window)
 
