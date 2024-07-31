@@ -1,15 +1,13 @@
-from reactinitializrapp.ui_mainwindow import Ui_MainWindow
-from PySide6.QtWidgets import QMainWindow
+from reactinitializrapp.ui_mainwindow import UIMainWindow
+from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout
 
 
+# Hereda de QMainWindow
 class MainWindow(QMainWindow):
+    # Constructor
     def __init__(self):
+        # Llama al constructor de la clase padre QMainWindow
         super(MainWindow, self).__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        # Instancia la clase UIMainWindow
+        self.ui = UIMainWindow(self)
 
-        # Connect signals and slots
-        self.ui.someButton.clicked.connect(self.some_button_clicked)
-
-    def some_button_clicked(self):
-        print("Application works")

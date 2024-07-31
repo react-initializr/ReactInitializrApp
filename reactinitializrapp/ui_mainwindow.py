@@ -1,23 +1,29 @@
-from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtWidgets
+from PySide6.QtWidgets import QGraphicsBlurEffect
+from reactinitializrapp.widgets.chat.chat import ChatWidget
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+class UIMainWindow:
+    def __init__(self, main_window):
+        main_window.setObjectName("MainWindow")
+        main_window.resize(800, 600)
 
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
+        self.central_widget = QtWidgets.QWidget(main_window)
+        self.central_widget.setObjectName("CentralWidget")
 
-        self.someButton = QtWidgets.QPushButton(self.centralwidget)
-        self.someButton.setGeometry(QtCore.QRect(100, 100, 200, 40))
-        self.someButton.setObjectName("someButton")
+        # Crear un layout vertical para central_widget
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.central_widget)
+        self.central_widget.setLayout(self.verticalLayout)
 
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.chatWidget = ChatWidget(self.central_widget)
+        self.verticalLayout.addWidget(self.chatWidget)
 
-    def retranslateUi(self, MainWindow):
+        main_window.setCentralWidget(self.central_widget)
+        self.retranslate_ui(main_window)
+        QtCore.QMetaObject.connectSlotsByName(main_window)
+
+    @staticmethod
+    def retranslate_ui(main_window):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "React Initializr"))
-        self.someButton.setText(_translate("MainWindow", "Click Me"))
+        # Renombrar la ventana principal
+        main_window.setWindowTitle(_translate("MainWindow", "React Initializr"))
