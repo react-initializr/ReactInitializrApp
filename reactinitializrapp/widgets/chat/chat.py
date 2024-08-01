@@ -11,6 +11,8 @@ class ChatWidget(QWidget):
 
         # Conectar el botón de envío al método de envío
         self.ui.sendButton.clicked.connect(self.send_message)
+        # Agregar un mensaje de prueba como si fuera recibido
+        self.ui.add_message("React Initializr es un modelo capaz de generar proyectos React preconfigurados.", is_sender=False)
 
     def send_message(self):
         message = self.ui.messageInput.text()
@@ -26,7 +28,6 @@ class ChatWidget(QWidget):
                         color: white;
                         padding: 10px;
                         border-radius: 10px;
-                        max-width: 70%;
                         word-wrap: break-word;
                     ">
                         {message}

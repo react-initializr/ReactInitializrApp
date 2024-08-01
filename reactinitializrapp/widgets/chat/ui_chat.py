@@ -97,33 +97,73 @@ class Ui_ChatWidget(QWidget):
     def send_message(self):
         message = self.messageInput.text()
         if message:
-            # Obtener la hora actual
-            current_time = QDateTime.currentDateTime().toString("HH:mm")
+            self.add_message(message, is_sender=True)
+            self.messageInput.clear()
 
-            font = QFont("Poppins", 10)
-            item = QListWidgetItem()
-            item_widget = QWidget()
-            item_layout = QVBoxLayout(item_widget)
-            item_layout.setContentsMargins(10, 10, 10, 10)
-            item_layout.setAlignment(Qt.AlignmentFlag.AlignRight)
-            item_widget.setLayout(item_layout)
+    def add_message(self, message, is_sender=True):
+        # Obtener la hora actual
+        current_time = QDateTime.currentDateTime().toString("HH:mm")
 
-            # Crear el mensaje con la hora
-            message_text = QLabel(f"{message}")
+        font = QFont("Poppins", 10)
+        item = QListWidgetItem()
+        item_widget = QWidget()
+        item_layout = QVBoxLayout(item_widget)  # Usar QVBoxLayout para la alineación vertical
+        item_layout.setContentsMargins(10, 10, 10, 10)
+
+        # Crear el mensaje con la hora
+        message_text = QLabel(f"{message}")
+        message_text.setStyleSheet(f"""
+            background-color: {"#3e3e3e" if is_sender else "#2e2e2e"};
+            color: white;
+            padding: 10px;
+            border-radius: 15px;
+            max-width: 600px;
+            word-wrap: break-word;
+            text-align: left;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        """)
+        message_text.setFont(font)
+        message_text.setWordWrap(True)  # Habilitar el ajuste de línea
+
+        # Aplicar un efecto de sombra directamente al QLabel
+        shadow_effect = QGraphicsDropShadowEffect()
+        shadow_effect.setBlurRadius(10)
+        shadow_effect.setXOffset(2)
+        shadow_effect.setYOffset(2)
+        shadow_effect.setColor(QColor(0, 0, 0, 160))
+        message_text.setGraphicsEffect(shadow_effect)
+
+        # Crear la etiqueta de la hora
+        time_label = QLabel(current_time)
+        time_label.setStyleSheet("color: gray; font-size: 8pt;")
+        time_label.setFont(font)
+
+        # Crear el mensaje con la hora
+        message_text = QLabel(f"{message}")
+        if is_sender:
             message_text.setStyleSheet("""
                 background-color: #3e3e3e;
                 color: white;
                 padding: 10px;
                 border-radius: 15px;
-                max-width: 600%; 
+                max-width: 600%;
                 word-wrap: break-word;
                 text-align: left;
                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
             """)
-            message_text.setFont(font)
-            message_text.setWordWrap(True)  # Habilitar el ajuste de línea
+        else:
+            message_text.setStyleSheet("""
+                background-color: transparent;
+                color: white;
+                padding: 10px;
+                word-wrap: break-word;
+                text-align: left;
+            """)
+        message_text.setFont(font)
+        message_text.setWordWrap(True)  # Habilitar el ajuste de línea
 
-            # Aplicar un efecto de sombra directamente al QLabel
+        if is_sender:
+            # Aplicar un efecto de sombra directamente al QLabel solo para mensajes enviados
             shadow_effect = QGraphicsDropShadowEffect()
             shadow_effect.setBlurRadius(10)
             shadow_effect.setXOffset(2)
@@ -131,21 +171,19 @@ class Ui_ChatWidget(QWidget):
             shadow_effect.setColor(QColor(0, 0, 0, 160))
             message_text.setGraphicsEffect(shadow_effect)
 
-            # Crear la etiqueta de la hora
-            time_label = QLabel(current_time)
-            time_label.setStyleSheet("color: gray; font-size: 8pt;")
-            time_label.setFont(font)
-
-
-            # Alineación horizontal de texto y hora
-            horizontal_layout = QHBoxLayout()
+        # Alineación horizontal de hora y texto
+        horizontal_layout = QHBoxLayout()
+        if is_sender:
             horizontal_layout.addWidget(message_text)
             horizontal_layout.addWidget(time_label)
             horizontal_layout.setAlignment(Qt.AlignmentFlag.AlignRight)
+        else:
+            horizontal_layout.addWidget(time_label)
+            horizontal_layout.addWidget(message_text)
+            horizontal_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
-            item_layout.addLayout(horizontal_layout)
+        item_layout.addLayout(horizontal_layout)
 
-            item.setSizeHint(item_widget.sizeHint())
-            self.chatHistory.addItem(item)
-            self.chatHistory.setItemWidget(item, item_widget)
-            self.messageInput.clear()
+        item.setSizeHint(item_widget.sizeHint())
+        self.chatHistory.addItem(item)
+        self.chatHistory.setItemWidget(item, item_widget)
