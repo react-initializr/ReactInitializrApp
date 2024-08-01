@@ -1,10 +1,26 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QHBoxLayout, QFrame, QGraphicsDropShadowEffect, QListWidget, QListWidgetItem, QLabel
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QHBoxLayout, QFrame, \
+    QGraphicsDropShadowEffect, QListWidget, QListWidgetItem, QLabel
 from PySide6.QtGui import QFont, QIcon, QColor, QFontDatabase
 from PySide6.QtCore import QSize, Qt, QDateTime
+from openai import OpenAI
+from dotenv import load_dotenv
+import os
 
 
 class Ui_ChatWidget(QWidget):
     def setupUi(self, ChatWidget):
+        load_dotenv()
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+        # Modelo a utilizar
+        self.modelo = 'gpt-4o-mini'
+
+        self.mensajes = [
+            {"role": "system",
+             "content": "React Initializr es un modelo capaz de generar los comandos necesarios para la creación de proyectos React."}
+        ]
+
+
         # Cargar la fuente personalizada
         QFontDatabase.addApplicationFont("assets/fonts/Poppins/Poppins-Regular.ttf")
         font = QFont("Poppins", 10)
@@ -15,10 +31,12 @@ class Ui_ChatWidget(QWidget):
 
         self.chatHistory = QListWidget(ChatWidget)
         self.chatHistory.setObjectName("chatHistory")
-        self.chatHistory.setStyleSheet("background-color: Transparent; padding: 10px; border-radius: 5px; color: white;")
+        self.chatHistory.setStyleSheet(
+            "background-color: Transparent; padding: 10px; border-radius: 5px; color: white;")
         self.chatHistory.setFont(font)
         self.chatHistory.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # Ocultar barra de desplazamiento vertical
-        self.chatHistory.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # Ocultar barra de desplazamiento horizontal
+        self.chatHistory.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarAlwaysOff)  # Ocultar barra de desplazamiento horizontal
         self.verticalLayout.addWidget(self.chatHistory)
 
         self.horizontalLayout = QHBoxLayout()
@@ -59,7 +77,6 @@ class Ui_ChatWidget(QWidget):
 
         self.messageInput.returnPressed.connect(self.send_message)
 
-
         # Crear un efecto de sombra
         shadow = QGraphicsDropShadowEffect(self.messageInputFrame)
         shadow.setBlurRadius(10)
@@ -96,9 +113,22 @@ class Ui_ChatWidget(QWidget):
 
     def send_message(self):
         message = self.messageInput.text()
+        self.add_message(message, is_sender=True)
         if message:
-            self.add_message(message, is_sender=True)
+
             self.messageInput.clear()
+
+            # Enviar mensaje a OpenAI y recibir respuesta
+            self.mensajes.append({"role": "user", "content": message})
+            response = self.client.chat.completions.create(
+                model=self.modelo,
+                messages=self.mensajes,
+                temperature=0.5,
+                max_tokens=600
+            )
+            content = response.choices[0].message.content
+            self.add_message(content, is_sender=False)
+            self.mensajes.append({"role": "assistant", "content": content})
 
     def add_message(self, message, is_sender=True):
         # Obtener la hora actual
@@ -158,6 +188,7 @@ class Ui_ChatWidget(QWidget):
                 padding: 10px;
                 word-wrap: break-word;
                 text-align: left;
+                max-width: 600%;
             """)
         message_text.setFont(font)
         message_text.setWordWrap(True)  # Habilitar el ajuste de línea
