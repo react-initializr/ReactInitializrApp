@@ -1,5 +1,6 @@
 from PySide6 import QtCore, QtWidgets
 
+from reactinitializrapp.utils.store import Store
 from reactinitializrapp.widgets.search_input.search_input import SearchInput
 from reactinitializrapp.widgets.project_button.project_button import ProjectButton
 from reactinitializrapp.models.project import Project
@@ -28,11 +29,8 @@ class UILateralBar:
 
         # Proyectos de prueba
         # TODO:
-        #  - Eliminar los proyectos
         #  - Agregar un layout para los proyectos
-        #  - Recibir los proyectos por parámetros O de una variable general
-        self.project1 = ProjectButton(Project("Project 1"))
-        self.project2 = ProjectButton(Project("Project 2"))
+        self.projects = self.get_projects()
 
         # Botones
         self.btn_new_project = QtWidgets.QPushButton("NP")
@@ -42,8 +40,9 @@ class UILateralBar:
         self.container_layout.addWidget(self.btn_new_project)
 
         # Añadir los proyectos al layout del contenedor
-        self.container_layout.addWidget(self.project1)
-        self.container_layout.addWidget(self.project2)
+        for project in self.projects:
+            project_button = ProjectButton(project)
+            self.container_layout.addWidget(project_button)
 
         self.container_layout.addWidget(self.btn_logo)
 
@@ -54,7 +53,9 @@ class UILateralBar:
         self.vertical_layout.addWidget(self.container_widget)
 
         # Ajustar el tamaño del lateral_bar al tamaño de la ventana principal
-        lateral_bar.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        lateral_bar.setSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding
+        )
         lateral_bar.setMaximumWidth(200)
 
     def setup_styles(self):
@@ -78,3 +79,13 @@ class UILateralBar:
             }
             """
         )
+
+    def get_projects(self):
+        projects = []
+
+        store = Store()  # Obtener la instancia de Store
+
+        # Obtener los proyectos de la base de datos
+        projects = store.get_state()["projects"]
+
+        return projects

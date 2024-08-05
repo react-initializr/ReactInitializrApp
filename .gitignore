@@ -336,3 +336,7 @@ compile_commands.json
 
 *_qmlcache.qrc
 
+
+# SQLite database files
+*.db
+*.sql

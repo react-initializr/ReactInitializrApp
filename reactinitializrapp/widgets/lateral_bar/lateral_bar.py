@@ -1,4 +1,8 @@
 from PySide6 import QtWidgets
+
+from reactinitializrapp.models.project import Project
+from reactinitializrapp.utils.actions import add_project
+from reactinitializrapp.utils.store import Store
 from reactinitializrapp.widgets.lateral_bar.ui_lateral_bar import UILateralBar
 from reactinitializrapp.widgets.settings_window.settings_window import SettingsWindow
 
@@ -61,7 +65,15 @@ class LateralBar(QtWidgets.QWidget):
             self.is_active = True
 
     def on_new_project_clicked(self):
-        print("New Project clicked")
+        # Crear una nueva instancia de Project
+        new_project = Project("New Project")
+
+        store = Store()  # Obtener la instancia de Store
+
+        # Añadir el proyecto a la base de datos
+        store.dispatch(add_project(new_project))
+
+        print(new_project)
 
     def on_logo_clicked(self):
         # Mostrar la ventana de configuración
