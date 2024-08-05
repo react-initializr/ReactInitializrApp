@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:ReactInitializrApp}/mydatabase.db",
+            "name": "local-sqlite"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
