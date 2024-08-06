@@ -41,6 +41,7 @@ class LateralBar(QtWidgets.QWidget):
             self.setFixedWidth(100)
             self.ui.btn_new_project.show()
             self.ui.search_input.hide()
+            self.ui.projects_scroll.hide()
             self.ui.btn_logo.setText("L")
             self.ui.btn_logo.setStyleSheet(
                 "background-color: #292929; color: white; border: 1px solid #000; padding: 10px 0; border-radius: 5px;"
@@ -50,6 +51,7 @@ class LateralBar(QtWidgets.QWidget):
             self.setFixedWidth(200)
             self.ui.btn_new_project.hide()
             self.ui.search_input.show()
+            self.ui.projects_scroll.show()
             self.ui.btn_logo.setText("React Initializr >")
             self.ui.btn_logo.setStyleSheet(
                 """

@@ -53,6 +53,4 @@ class UISettingsWindow:
         )
 
         # Estilos para el contenedor de opciones de fuente
-        self.font_container.setStyleSheet(
-            "border: none; padding: 10px;"
-        )
+        self.font_container.setStyleSheet("border: none; padding: 10px;")
