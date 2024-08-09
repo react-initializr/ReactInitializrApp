@@ -11,4 +11,3 @@ class MainWindow(QMainWindow):
         # Instancia la clase UIMainWindow
         self.ui = UIMainWindow(self)
 
-
