@@ -27,7 +27,7 @@ class UIMainWindow:
         self.horizontal_layout = QtWidgets.QHBoxLayout(self.central_widget)
 
         # Lateral Bar a la izquierda
-        self.lateral_bar = LateralBar(main_window)
+        self.lateral_bar = LateralBar(self.central_widget)
         self.horizontal_layout.addWidget(self.lateral_bar)
 
         # Chat a la derecha
@@ -35,11 +35,4 @@ class UIMainWindow:
         self.horizontal_layout.addWidget(self.chatWidget)
 
         main_window.setCentralWidget(self.central_widget)
-
-        self.chatWidget = ChatWidget(self.central_widget)
-        self.verticalLayout.addWidget(self.chatWidget)
-
-        main_window.setCentralWidget(self.central_widget)
-        self.retranslate_ui(main_window)
-        QtCore.QMetaObject.connectSlotsByName(main_window)
 
