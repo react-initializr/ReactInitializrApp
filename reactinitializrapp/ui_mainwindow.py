@@ -1,6 +1,8 @@
 from PySide6 import QtCore, QtWidgets
-from reactinitializrapp.widgets.lateral_bar.lateral_bar import LateralBar
+from PySide6.QtWidgets import QGraphicsBlurEffect
 
+from reactinitializrapp.widgets.lateral_bar.lateral_bar import LateralBar
+from reactinitializrapp.widgets.chat.chat import ChatWidget
 
 class UIMainWindow:
     def __init__(self, main_window):
@@ -21,16 +23,23 @@ class UIMainWindow:
         self.central_widget = QtWidgets.QWidget(main_window)
         self.central_widget.setObjectName("CentralWidget")
 
-        # Disposición Horizontal
+        # Disposición Horizontal principal
         self.horizontal_layout = QtWidgets.QHBoxLayout(self.central_widget)
 
-        # Lateral Bar
+        # Lateral Bar a la izquierda
         self.lateral_bar = LateralBar(main_window)
-        # Chat
-        self.chat = QtWidgets.QWidget(main_window)
-
-        # Estructura de la ventana principal en el layout horizontal
         self.horizontal_layout.addWidget(self.lateral_bar)
-        self.horizontal_layout.addWidget(self.chat)
+
+        # Chat a la derecha
+        self.chatWidget = ChatWidget(self.central_widget)
+        self.horizontal_layout.addWidget(self.chatWidget)
 
         main_window.setCentralWidget(self.central_widget)
+
+        self.chatWidget = ChatWidget(self.central_widget)
+        self.verticalLayout.addWidget(self.chatWidget)
+
+        main_window.setCentralWidget(self.central_widget)
+        self.retranslate_ui(main_window)
+        QtCore.QMetaObject.connectSlotsByName(main_window)
+
