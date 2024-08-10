@@ -12,6 +12,9 @@ class MessagesWidget(QWidget):
         self.ui.setupUi(self)
 
     def add_message(self, message, is_sender=True):
+
+        print(f"add_message called with: {message}, is_sender: {is_sender}")
+
         # Obtener la hora actual
         current_time = QDateTime.currentDateTime().toString("HH:mm")
 
@@ -76,5 +79,7 @@ class MessagesWidget(QWidget):
         item_layout.addLayout(horizontal_layout)
 
         item.setSizeHint(item_widget.sizeHint())
+        print("Adding item to chatHistory.")
         self.ui.chatHistory.addItem(item)
         self.ui.chatHistory.setItemWidget(item, item_widget)
+        print("Item added to chatHistory.")
