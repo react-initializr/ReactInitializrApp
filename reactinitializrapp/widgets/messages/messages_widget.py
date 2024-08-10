@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QHBoxLayout, QFrame, \
-    QGraphicsDropShadowEffect, QListWidget, QListWidgetItem, QLabel
+    QGraphicsDropShadowEffect, QListWidget, QListWidgetItem, QLabel, QApplication
 from PySide6.QtGui import QFont, QColor
 from PySide6.QtCore import QDateTime, Qt
 from reactinitializrapp.widgets.messages.ui_messages_widget import Ui_MessagesWidget
@@ -78,8 +78,84 @@ class MessagesWidget(QWidget):
 
         item_layout.addLayout(horizontal_layout)
 
+        if is_sender:
+            # Crear un layout para los botones
+            button_layout = QHBoxLayout()
+
+            # Crear botones
+            button_like = QPushButton("👍")
+            button_dislike = QPushButton("👎")
+            button_copy = QPushButton("📋")
+            button_edit = QPushButton("✏️")
+
+            # Estilizar los botones
+            for button in [button_like, button_dislike, button_copy, button_edit]:
+                button.setFixedSize(30, 30)
+                button.setStyleSheet("""
+                    QPushButton {
+                        border: none;
+                        background-color: transparent;
+                        color: white;
+                        border-radius: 7px;
+                    }
+                    QPushButton:hover {
+                        background-color: #4e4e4e;
+                    }
+                """)
+
+            # Conectar la acción de copiar al botón de copiar
+            button_copy.clicked.connect(lambda: self.copy_to_clipboard(message))
+
+            # Añadir los botones al layout
+
+            button_layout.addWidget(button_copy)
+            button_layout.addWidget(button_edit)
+            button_layout.setAlignment(Qt.AlignmentFlag.AlignRight)
+
+            item_layout.addLayout(button_layout)
+        else:
+            # Crear un layout para los botones
+            button_layout = QHBoxLayout()
+
+            # Crear botones
+            button_like = QPushButton("👍")
+            button_dislike = QPushButton("👎")
+            button_copy = QPushButton("📋")
+            button_edit = QPushButton("✏️")
+
+            # Estilizar los botones
+            for button in [button_like, button_dislike, button_copy, button_edit]:
+                button.setFixedSize(30, 30)
+                button.setStyleSheet("""
+                    QPushButton {
+                        border: none;
+                        background-color: transparent;
+                        color: white;
+                        border-radius: 7px;
+                    }
+                    QPushButton:hover {
+                        background-color: #4e4e4e;
+                    }
+                """)
+
+            # Conectar la acción de copiar al botón de copiar
+            button_copy.clicked.connect(lambda: self.copy_to_clipboard(message))
+
+            # Añadir los botones al layout
+            button_layout.addWidget(button_like)
+            button_layout.addWidget(button_dislike)
+            button_layout.addWidget(button_copy)
+            button_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+
+            item_layout.addLayout(button_layout)
+
         item.setSizeHint(item_widget.sizeHint())
         print("Adding item to chatHistory.")
         self.ui.chatHistory.addItem(item)
         self.ui.chatHistory.setItemWidget(item, item_widget)
         print("Item added to chatHistory.")
+
+    def copy_to_clipboard(self, message):
+        # Copiar el mensaje al portapapeles
+        clipboard = QApplication.clipboard()
+        clipboard.setText(message)
