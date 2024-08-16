@@ -1,5 +1,5 @@
 from reactinitializrapp.ui_mainwindow import UIMainWindow
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QVBoxLayout
 
 
 # Hereda de QMainWindow
